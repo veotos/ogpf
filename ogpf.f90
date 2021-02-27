@@ -155,9 +155,9 @@ module ogpf
     !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     ! Library information
-    character(len=*), parameter :: md_name = 'ogpf libray'
-    character(len=*), parameter :: md_rev  = 'Rev. 0.22 of March 9th, 2018'
-    character(len=*), parameter :: md_lic  = 'Licence: MIT'
+    character(len=*), parameter :: md_name = 'ogpf library'
+    character(len=*), parameter :: md_rev  = '(Customized based on Rev. 0.22 of March 9th, 2018'
+    character(len=*), parameter :: md_lic  = 'License: MIT'
 
     ! ogpf Configuration parameters
     ! The terminal and font have been set for Windows operating system
