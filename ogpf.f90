@@ -673,7 +673,11 @@ contains
     subroutine plot2d_vector_vs_vector(this, x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         !..............................................................................
         ! This procedure plots:
         !   1. A vector against another vector (xy plot)
@@ -708,6 +712,26 @@ contains
         character(len=*),  intent(in), optional        :: ls4
         character(len=*),  intent(in), optional        :: axes4
 
+        real(wp),  intent(in), dimension(:), optional  :: x5
+        real(wp),  intent(in), dimension(:), optional  :: y5
+        character(len=*),  intent(in), optional        :: ls5
+        character(len=*),  intent(in), optional        :: axes5
+
+        real(wp),  intent(in), dimension(:), optional  :: x6
+        real(wp),  intent(in), dimension(:), optional  :: y6
+        character(len=*),  intent(in), optional        :: ls6
+        character(len=*),  intent(in), optional        :: axes6
+
+        real(wp),  intent(in), dimension(:), optional  :: x7
+        real(wp),  intent(in), dimension(:), optional  :: y7
+        character(len=*),  intent(in), optional        :: ls7
+        character(len=*),  intent(in), optional        :: axes7
+
+        real(wp),  intent(in), dimension(:), optional  :: x8
+        real(wp),  intent(in), dimension(:), optional  :: y8
+        character(len=*),  intent(in), optional        :: ls8
+        character(len=*),  intent(in), optional        :: axes8
+
         !   Local variables
         !----------------------------------------------------------------------
 
@@ -719,10 +743,18 @@ contains
         integer:: ny3
         integer:: nx4
         integer:: ny4
+        integer:: nx5
+        integer:: ny5
+        integer:: nx6
+        integer:: ny6
+        integer:: nx7
+        integer:: ny7
+        integer:: nx8
+        integer:: ny8
         integer::           number_of_plots
         character(len=3)::  plottype
         integer:: i
-        character(len=80) ::  pltstring(4)  ! Four 80 characters string
+        character(len=80) ::  pltstring(8)  ! Four 80 characters string
 
         !Initialize variables
         plottype  = ''
@@ -783,8 +815,60 @@ contains
             else
                 return
             end if
-            !Process line spec for 4th data set if present
+            !Process line spec for 4rd data set if present
             call process_linespec(4, pltstring(4), ls4, axes4)
+        end if
+
+        if (present(x5) .and. present (y5)) then
+            nx5=size(x5)
+            ny5=size(y5)
+            if (checkdim(nx5,ny5)) then
+                plottype='xy5'
+                number_of_plots=5
+            else
+                return
+            end if
+            !Process line spec for 5th data set if present
+            call process_linespec(5, pltstring(5), ls5, axes5)
+        end if
+
+        if (present(x6) .and. present (y6)) then
+            nx6=size(x6)
+            ny6=size(y6)
+            if (checkdim(nx6,ny6)) then
+                plottype='xy6'
+                number_of_plots=6
+            else
+                return
+            end if
+            !Process line spec for 6th data set if present
+            call process_linespec(6, pltstring(6), ls6, axes6)
+        end if
+
+        if (present(x7) .and. present (y7)) then
+            nx7=size(x7)
+            ny7=size(y7)
+            if (checkdim(nx7,ny7)) then
+                plottype='xy7'
+                number_of_plots=7
+            else
+                return
+            end if
+            !Process line spec for 7th data set if present
+            call process_linespec(7, pltstring(7), ls7, axes7)
+        end if
+
+        if (present(x8) .and. present (y8)) then
+            nx8=size(x8)
+            ny8=size(y8)
+            if (checkdim(nx8,ny8)) then
+                plottype='xy8'
+                number_of_plots=8
+            else
+                return
+            end if
+            !Process line spec for 8th data set if present
+            call process_linespec(8, pltstring(8), ls8, axes8)
         end if
 
 
@@ -818,6 +902,36 @@ contains
                 call write_xydata(this%file_unit,nx2,x2,y2)
                 call write_xydata(this%file_unit,nx3,x3,y3)
                 call write_xydata(this%file_unit,nx4,x4,y4)
+            case ('xy5')
+                call write_xydata(this%file_unit,nx1,x1,y1)
+                call write_xydata(this%file_unit,nx2,x2,y2)
+                call write_xydata(this%file_unit,nx3,x3,y3)
+                call write_xydata(this%file_unit,nx4,x4,y4)
+                call write_xydata(this%file_unit,nx5,x5,y5)
+            case ('xy6')
+                call write_xydata(this%file_unit,nx1,x1,y1)
+                call write_xydata(this%file_unit,nx2,x2,y2)
+                call write_xydata(this%file_unit,nx3,x3,y3)
+                call write_xydata(this%file_unit,nx4,x4,y4)
+                call write_xydata(this%file_unit,nx5,x5,y5)
+                call write_xydata(this%file_unit,nx6,x6,y6)
+            case ('xy7')
+                call write_xydata(this%file_unit,nx1,x1,y1)
+                call write_xydata(this%file_unit,nx2,x2,y2)
+                call write_xydata(this%file_unit,nx3,x3,y3)
+                call write_xydata(this%file_unit,nx4,x4,y4)
+                call write_xydata(this%file_unit,nx5,x5,y5)
+                call write_xydata(this%file_unit,nx6,x6,y6)
+                call write_xydata(this%file_unit,nx7,x7,y7)
+            case ('xy8')
+                call write_xydata(this%file_unit,nx1,x1,y1)
+                call write_xydata(this%file_unit,nx2,x2,y2)
+                call write_xydata(this%file_unit,nx3,x3,y3)
+                call write_xydata(this%file_unit,nx4,x4,y4)
+                call write_xydata(this%file_unit,nx5,x5,y5)
+                call write_xydata(this%file_unit,nx6,x6,y6)
+                call write_xydata(this%file_unit,nx7,x7,y7)
+                call write_xydata(this%file_unit,nx8,x8,y8)
         end select
 
         !> Rev 0.2
@@ -1431,7 +1545,11 @@ contains
     subroutine semilogxv(this, x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         !..............................................................................
         !   This procedure is the same as plotXY with logarithmic x1 and x2 axes
         !..............................................................................
@@ -1457,12 +1575,37 @@ contains
         real(wp),  intent(in), dimension(:), optional  :: y4
         character(len=*),  intent(in), optional        :: ls4
         character(len=*),  intent(in), optional        :: axes4
+
+        real(wp),  intent(in), dimension(:), optional  :: x5
+        real(wp),  intent(in), dimension(:), optional  :: y5
+        character(len=*),  intent(in), optional        :: ls5
+        character(len=*),  intent(in), optional        :: axes5
+
+        real(wp),  intent(in), dimension(:), optional  :: x6
+        real(wp),  intent(in), dimension(:), optional  :: y6
+        character(len=*),  intent(in), optional        :: ls6
+        character(len=*),  intent(in), optional        :: axes6
+
+        real(wp),  intent(in), dimension(:), optional  :: x7
+        real(wp),  intent(in), dimension(:), optional  :: y7
+        character(len=*),  intent(in), optional        :: ls7
+        character(len=*),  intent(in), optional        :: axes7
+
+        real(wp),  intent(in), dimension(:), optional  :: x8
+        real(wp),  intent(in), dimension(:), optional  :: y8
+        character(len=*),  intent(in), optional        :: ls8
+        character(len=*),  intent(in), optional        :: axes8
+
         this%plotscale='semilogx'
         call plot2d_vector_vs_vector(this, &
             x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         ! Set the plot scale as linear. It means log scale is off
         this%plotscale='linear'
 
@@ -1473,7 +1616,11 @@ contains
     subroutine semilogyv(this, x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4,axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         !..............................................................................
         !   This procedure is the same as plotXY with logarithmic y1 and y2 axes
         !..............................................................................
@@ -1500,12 +1647,36 @@ contains
         character(len=*),  intent(in), optional        :: ls4
         character(len=*),  intent(in), optional        :: axes4
 
+        real(wp),  intent(in), dimension(:), optional  :: x5
+        real(wp),  intent(in), dimension(:), optional  :: y5
+        character(len=*),  intent(in), optional        :: ls5
+        character(len=*),  intent(in), optional        :: axes5
+
+        real(wp),  intent(in), dimension(:), optional  :: x6
+        real(wp),  intent(in), dimension(:), optional  :: y6
+        character(len=*),  intent(in), optional        :: ls6
+        character(len=*),  intent(in), optional        :: axes6
+
+        real(wp),  intent(in), dimension(:), optional  :: x7
+        real(wp),  intent(in), dimension(:), optional  :: y7
+        character(len=*),  intent(in), optional        :: ls7
+        character(len=*),  intent(in), optional        :: axes7
+
+        real(wp),  intent(in), dimension(:), optional  :: x8
+        real(wp),  intent(in), dimension(:), optional  :: y8
+        character(len=*),  intent(in), optional        :: ls8
+        character(len=*),  intent(in), optional        :: axes8
+
         this%plotscale='semilogy'
         call plot2d_vector_vs_vector(this, &
             x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         ! Set the plot scale as linear. It means log scale is off
         this%plotscale='linear'
 
@@ -1517,7 +1688,11 @@ contains
     subroutine loglogv(this, x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5, &
+            x6, y6, ls6, axes6, &
+            x7, y7, ls7, axes7, &
+            x8, y8, ls8, axes8  )
         !..............................................................................
         !   This procedure is the same as plotXY with logarithmic x1, y1, x2, y2 axes
         !..............................................................................
@@ -1544,13 +1719,34 @@ contains
         character(len=*),  intent(in), optional        :: ls4
         character(len=*),  intent(in), optional        :: axes4
 
+        real(wp),  intent(in), dimension(:), optional  :: x5
+        real(wp),  intent(in), dimension(:), optional  :: y5
+        character(len=*),  intent(in), optional        :: ls5
+        character(len=*),  intent(in), optional        :: axes5
+
+
+        real(wp),  intent(in), dimension(:), optional  :: x6
+        real(wp),  intent(in), dimension(:), optional  :: y6
+        character(len=*),  intent(in), optional        :: ls6
+        character(len=*),  intent(in), optional        :: axes6
+
+        real(wp),  intent(in), dimension(:), optional  :: x7
+        real(wp),  intent(in), dimension(:), optional  :: y7
+        character(len=*),  intent(in), optional        :: ls7
+        character(len=*),  intent(in), optional        :: axes7
+
+        real(wp),  intent(in), dimension(:), optional  :: x8
+        real(wp),  intent(in), dimension(:), optional  :: y8
+        character(len=*),  intent(in), optional        :: ls8
+        character(len=*),  intent(in), optional        :: axes8
 
         this%plotscale='loglog'
         call plot2d_vector_vs_vector(this, &
             x1, y1, ls1, axes1, &
             x2, y2, ls2, axes2, &
             x3, y3, ls3, axes3, &
-            x4, y4, ls4, axes4  )
+            x4, y4, ls4, axes4, &
+            x5, y5, ls5, axes5  )
         ! Set the plot scale as linear. It means log scale is off
         this%plotscale='linear'
 
